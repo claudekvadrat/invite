@@ -85,7 +85,7 @@
     window.addEventListener("resize", resize);
 
     // количество зависит от площади экрана — на смартфоне лепестков немного
-    var COUNT = Math.round(Math.min(26, Math.max(12, (W * H) / 32000)));
+    var COUNT = Math.round(Math.min(48, Math.max(24, (W * H) / 16000)));
     var petalsArr = [];
 
     // палитра лепестков — оттенки алой розы и золота
@@ -97,12 +97,12 @@
     Petal.prototype.reset = function (initial) {
       this.x = rand(0, W);
       this.y = initial ? rand(-H, 0) : rand(-40, -10);
-      this.size = rand(7, 15);
-      this.speedY = rand(0.35, 1.0);
-      this.speedX = rand(-0.4, 0.4);
+      this.size = rand(11, 22);
+      this.speedY = rand(1.1, 2.6);
+      this.speedX = rand(-0.5, 0.5);
       this.angle = rand(0, Math.PI * 2);
-      this.spin = rand(-0.02, 0.02);
-      this.sway = rand(0.4, 1.1);
+      this.spin = rand(-0.035, 0.035);
+      this.sway = rand(0.6, 1.5);
       this.swayPhase = rand(0, Math.PI * 2);
       this.color = colors[(Math.random() * colors.length) | 0];
       this.opacity = rand(0.45, 0.9);

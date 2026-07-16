@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="kk">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#3A0A12" />
-  <title>Приглашение · Юбилей Сапуры · 75 лет</title>
-  <meta name="description" content="Приглашаем Вас разделить с нами праздник — 75-летний юбилей Сапуры. 19 сентября 2026 года, ресторан «Тумар»." />
+  <title>Шақыру · Сапураның мерейтойы · 75 жас</title>
+  <meta name="description" content="Сізді Сапураның 75 жылдық мерейтойына шақырамыз. 2026 жылғы 19 қыркүйек, «Тумар» мейрамханасы." />
 
-  <!-- Open Graph — красивая карточка при отправке ссылки в мессенджерах -->
+  <!-- Open Graph — сілтемені мессенджерге жібергенде әдемі карточка -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Приглашение на юбилей — Сапуре 75 лет" />
-  <meta property="og:description" content="19 сентября 2026 · 12:00 · ресторан «Тумар». Будем рады видеть Вас!" />
+  <meta property="og:title" content="Мерейтойға шақыру — Сапураға 75 жас" />
+  <meta property="og:description" content="2026 жылғы 19 қыркүйек · 12:00 · «Тумар» мейрамханасы. Сізді күтеміз!" />
   <meta property="og:image" content="img/main.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -20,10 +20,10 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Падающие лепестки роз (декор, ненавязчивый) -->
+  <!-- Түсіп жатқан раушан жапырақтары (сәндік) -->
   <canvas id="petals" aria-hidden="true"></canvas>
 
-  <!-- Виньетка по краям -->
+  <!-- Шеттердегі виньетка -->
   <div class="vignette" aria-hidden="true"></div>
 
   <main class="card">
@@ -35,29 +35,29 @@
         <span class="diamond">&#10022;</span>
         <span class="line"></span>
       </div>
-      <p class="eyebrow">Сердечно приглашаем Вас</p>
-      <p class="eyebrow-sub">на семейное торжество</p>
+      <p class="eyebrow">Сізді шын жүректен шақырамыз</p>
+      <p class="eyebrow-sub">отбасылық мерекеге</p>
     </header>
 
     <!-- ─────────── ФОТО В ЗОЛОТОЙ РАМЕ ─────────── -->
-    <section class="portrait-wrap reveal" aria-label="Юбиляр">
+    <section class="portrait-wrap reveal" aria-label="Мерейтой иесі">
       <div class="portrait-frame">
-        <img class="portrait" src="img/main.jpg" alt="Сапура — юбиляр" loading="eager" />
+        <img class="portrait" src="img/main.jpg" alt="Сапура — мерейтой иесі" loading="eager" />
         <div class="portrait-gloss" aria-hidden="true"></div>
       </div>
     </section>
 
     <!-- ─────────── ГЕРОЙ: ЦИФРА 75 ─────────── -->
     <section class="hero reveal">
-      <p class="hero-lead">Юбилей</p>
-      <div class="number" aria-label="75 лет">
+      <p class="hero-lead">Мерейтой</p>
+      <div class="number" aria-label="75 жас">
         <span class="digit">75</span>
       </div>
-      <p class="hero-years">лет</p>
+      <p class="hero-years">жас</p>
       <h1 class="name">Сапура</h1>
       <p class="wish">
-        75 — это большая, красивая цифра.<br />
-        Годы, наполненные любовью, теплом и мудростью.
+        75 — үлкен әрі әдемі сан.<br />
+        Махаббатқа, жылуға және даналыққа толы жылдар.
       </p>
     </section>
 
@@ -67,42 +67,85 @@
       <span class="line"></span>
     </div>
 
+    <!-- ─────────── КҮНТІЗБЕ (қыркүйек) ─────────── -->
+    <section class="calendar-wrap reveal" aria-label="Мереке күні">
+      <p class="detail-label">Мереке күні</p>
+      <div class="calendar">
+        <p class="cal-month">Қыркүйек 2026</p>
+        <div class="cal-grid" aria-hidden="true">
+          <span class="cal-dow">Дс</span>
+          <span class="cal-dow">Сс</span>
+          <span class="cal-dow">Ср</span>
+          <span class="cal-dow">Бс</span>
+          <span class="cal-dow">Жм</span>
+          <span class="cal-dow">Сб</span>
+          <span class="cal-dow">Жс</span>
+          <!-- 1 қыркүйек 2026 — сейсенбі, сондықтан бір бос ұяшық -->
+          <span class="cal-pad"></span>
+          <span class="cal-day">1</span>
+          <span class="cal-day">2</span>
+          <span class="cal-day">3</span>
+          <span class="cal-day">4</span>
+          <span class="cal-day">5</span>
+          <span class="cal-day">6</span>
+          <span class="cal-day">7</span>
+          <span class="cal-day">8</span>
+          <span class="cal-day">9</span>
+          <span class="cal-day">10</span>
+          <span class="cal-day">11</span>
+          <span class="cal-day">12</span>
+          <span class="cal-day">13</span>
+          <span class="cal-day">14</span>
+          <span class="cal-day">15</span>
+          <span class="cal-day">16</span>
+          <span class="cal-day">17</span>
+          <span class="cal-day">18</span>
+          <span class="cal-day cal-mark">19</span>
+          <span class="cal-day">20</span>
+          <span class="cal-day">21</span>
+          <span class="cal-day">22</span>
+          <span class="cal-day">23</span>
+          <span class="cal-day">24</span>
+          <span class="cal-day">25</span>
+          <span class="cal-day">26</span>
+          <span class="cal-day">27</span>
+          <span class="cal-day">28</span>
+          <span class="cal-day">29</span>
+          <span class="cal-day">30</span>
+        </div>
+        <p class="cal-caption">19 қыркүйек, сенбі · 12:00</p>
+      </div>
+    </section>
+
     <!-- ─────────── ДЕТАЛИ СОБЫТИЯ ─────────── -->
-    <section class="details" aria-label="Детали события">
+    <section class="details" aria-label="Мереке мәліметтері">
 
-      <article class="detail-card reveal">
-        <span class="detail-icon" aria-hidden="true">&#128197;</span>
-        <p class="detail-label">Дата</p>
-        <p class="detail-value">19 сентября 2026</p>
-        <p class="detail-extra">суббота</p>
-      </article>
-
-      <article class="detail-card reveal">
+      <article class="detail-card wide-card reveal">
         <span class="detail-icon" aria-hidden="true">&#128336;</span>
-        <p class="detail-label">Начало</p>
-        <p class="detail-value">12:00</p>
-        <p class="detail-extra">просим не опаздывать</p>
+        <p class="detail-label">Басталуы</p>
+        <p class="detail-value">Сағат 12:00</p>
+        <p class="detail-extra">кешікпеуіңізді сұраймыз</p>
       </article>
 
       <article class="detail-card wide-card reveal">
         <span class="detail-icon" aria-hidden="true">&#127869;</span>
-        <p class="detail-label">Место торжества</p>
-        <p class="detail-value">Ресторан «Тумар»</p>
-        <p class="detail-extra">ул. Сагадата Нурмагамбетова, 8 · 1 этаж</p>
+        <p class="detail-label">Мереке өтетін орын</p>
+        <p class="detail-value">«Тумар» мейрамханасы</p>
+        <p class="detail-extra">Сағадат Нұрмағамбетов көшесі, 8 · 1-қабат</p>
         <a class="map-btn" href="https://go.2gis.com/dRjV9" target="_blank" rel="noopener">
           <span class="map-pin" aria-hidden="true">&#128205;</span>
-          Открыть в 2ГИС
+          2ГИС-те ашу
         </a>
       </article>
 
     </section>
 
     <!-- ─────────── ОБРАТНЫЙ ОТСЧЁТ ─────────── -->
-    <section class="countdown reveal" aria-label="Обратный отсчёт">
-      <p class="countdown-title">До праздника осталось</p>
+    <section class="countdown reveal" aria-label="Кері санақ">
+      <p class="countdown-title">Мерекеге дейін қалды</p>
       <div class="countdown-grid" id="countdown">
-        <div class="cd-unit"><span class="cd-num" data-d>—</span><span class="cd-cap">дней</span></div>
-        <div class="cd-unit"><span class="cd-num" data-h>—</span><span class="cd-cap">часов</span></div>
+        <div class="cd-unit"><span class="cd-num" data-d>—</span><span class="cd-cap">күн</span></div>
+        <div class="cd-unit"><span class="cd-num" data-h>—</span><span class="cd-cap">сағат</span></div>
         <div class="cd-unit"><span class="cd-num" data-m>—</span><span class="cd-cap">минут</span></div>
         <div class="cd-unit"><span class="cd-num" data-s>—</span><span class="cd-cap">секунд</span></div>
       </div>
@@ -116,10 +159,9 @@
         <span class="line"></span>
       </div>
       <p class="outro-text">
-        Ваше присутствие станет
-        самым дорогим подарком.
+        Сіздің қатысуыңыз —
+        біз үшін ең қымбат сый.
       </p>
-      <p class="outro-sign">С теплом и любовью,<br />Ваша семья</p>
     </footer>
 
   </main>
