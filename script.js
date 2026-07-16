@@ -21,10 +21,8 @@
     var rafId = null;
     var programmaticY = -1; // куда мы сами проскроллили в последнем кадре
 
-    // Плавное ускорение-замедление (ease-in-out)
-    function easeInOut(t) {
-      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-    }
+    // Равномерная скорость: одинаково плавно от начала до конца (linear)
+    function ease(t) { return t; }
 
     function stop() {
       if (cancelled) return;
@@ -97,7 +95,7 @@
         if (cancelled) return;
         if (startTime === null) startTime = now;
         var p = Math.min((now - startTime) / DURATION, 1);
-        var y = Math.round(startY + distance * easeInOut(p));
+        var y = Math.round(startY + distance * ease(p));
         programmaticY = y;      // запоминаем, куда скроллим сами
         scrollWindowTo(y);
         if (p < 1) {
