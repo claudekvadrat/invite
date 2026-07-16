@@ -15,7 +15,7 @@
     // Не даём браузеру восстанавливать прежнюю позицию — тур всегда с верха
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
-    var DURATION = 5000;   // общая длительность прокрутки, мс
+    var DURATION = 15000;  // общая длительность прокрутки, мс (медленно и плавно)
     var START_DELAY = 1100; // пауза перед стартом, чтобы человек увидел «шапку»
     var cancelled = false;
     var rafId = null;
