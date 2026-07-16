@@ -224,13 +224,16 @@ body::before {
 
 .number {
   position: relative;
-  line-height: .85;
+  line-height: 1;
+  /* небольшой запас снизу, чтобы низ цифры не срезался и «ЖАС» не наезжал */
+  padding-bottom: 6px;
 }
 .digit {
   font-family: "Playfair Display", serif;
   font-weight: 800;
-  font-size: clamp(120px, 40vw, 200px);
-  letter-spacing: -4px;
+  font-size: clamp(110px, 33vw, 172px);
+  line-height: 1.06;
+  letter-spacing: -3px;
   background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 42%, var(--gold-deep) 78%, var(--gold-light) 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -238,6 +241,7 @@ body::before {
   color: var(--gold);
   filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .45));
   display: inline-block;
+  padding: 0 6px; /* воздух по бокам, чтобы наклонные засечки не резались */
 }
 
 .hero-years {
@@ -247,7 +251,7 @@ body::before {
   letter-spacing: 10px;
   text-transform: uppercase;
   color: var(--gold-light);
-  margin-top: -6px;
+  margin-top: 2px;
   padding-left: 10px;
 }
 
@@ -557,18 +561,22 @@ body::before {
 }
 .digit { animation: shimmer 4.5s ease-in-out infinite; }
 
-/* Золотой блик, пробегающий по цифре 75 по диагонали */
-.number { overflow: hidden; }
+/* Золотой блик, пробегающий по цифре 75 по диагонали.
+   Клипаем ТОЛЬКО по бокам (inset слева/справа), низ и верх свободны —
+   поэтому цифра снизу больше не срезается. */
+.number {
+  clip-path: inset(-12% 0% -12% 0%);
+}
 .number::after {
   content: "";
   position: absolute;
-  top: -20%;
+  top: 0;
   left: -60%;
   width: 40%;
-  height: 140%;
+  height: 100%;
   background: linear-gradient(100deg,
     transparent, rgba(255, 248, 224, .0) 30%,
-    rgba(255, 250, 235, .75) 50%,
+    rgba(255, 250, 235, .7) 50%,
     rgba(255, 248, 224, .0) 70%, transparent);
   transform: skewX(-18deg);
   pointer-events: none;
@@ -609,16 +617,15 @@ body::before {
 }
 .cd-num.bump { animation: tick .45s cubic-bezier(.3,.8,.3,1); }
 
+/* При включённой экономии движения гасим только «дёрганые» бесконечные
+   эффекты (мерцание, пульс, блик). Лепестки, автоскролл и мягкие появления
+   остаются — это суть праздничного приглашения. */
 @media (prefers-reduced-motion: reduce) {
-  .reveal,
-  .portrait-wrap.reveal,
-  .hero.reveal .name {
-    opacity: 1; transform: none; filter: none; transition: none;
-  }
   .digit, .cal-mark, .portrait-frame, .map-btn,
-  .ornament .diamond, .ornament .rose { animation: none; }
+  .ornament .diamond, .ornament .rose,
+  .cd-num.bump { animation: none; }
   .number::after { display: none; }
-  #petals { display: none; }
+  /* #petals остаются видимыми; reveal-появления тоже работают */
 }
 
 /* Небольшие экраны — ужимаем отступы */

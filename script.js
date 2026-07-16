@@ -8,9 +8,9 @@
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ── 0. Кинематографичный автоскролл вниз при заходе (≈5 сек) ── */
+  /* ── 0. Кинематографичный автоскролл вниз при заходе (≈15 сек) ── */
   (function autoScrollTour() {
-    if (reduceMotion) return;
+    // Автоскролл работает всегда (даже при reduce-motion) — это ключевая фича приглашения
 
     // Не даём браузеру восстанавливать прежнюю позицию — тур всегда с верха
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
@@ -187,7 +187,7 @@
 
   /* ── 3. Падающие лепестки роз на canvas ── */
   (function petals() {
-    if (reduceMotion) return;
+    // Лепестки падают всегда — это украшение приглашения
     var canvas = document.getElementById("petals");
     if (!canvas) return;
     var ctx = canvas.getContext("2d");
