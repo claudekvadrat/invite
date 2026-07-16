@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#3A0A12" />
+  <title>Приглашение · Юбилей Сапуры · 75 лет</title>
+  <meta name="description" content="Приглашаем Вас разделить с нами праздник — 75-летний юбилей Сапуры. 19 сентября 2026 года, ресторан «Тумар»." />
+
+  <!-- Open Graph — красивая карточка при отправке ссылки в мессенджерах -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Приглашение на юбилей — Сапуре 75 лет" />
+  <meta property="og:description" content="19 сентября 2026 · 12:00 · ресторан «Тумар». Будем рады видеть Вас!" />
+  <meta property="og:image" content="img/main.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Marck+Script&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Падающие лепестки роз (декор, ненавязчивый) -->
+  <canvas id="petals" aria-hidden="true"></canvas>
+
+  <!-- Виньетка по краям -->
+  <div class="vignette" aria-hidden="true"></div>
+
+  <main class="card">
+
+    <!-- ─────────── ШАПКА ─────────── -->
+    <header class="intro reveal">
+      <div class="ornament" aria-hidden="true">
+        <span class="line"></span>
+        <span class="diamond">&#10022;</span>
+        <span class="line"></span>
+      </div>
+      <p class="eyebrow">Сердечно приглашаем Вас</p>
+      <p class="eyebrow-sub">на семейное торжество</p>
+    </header>
+
+    <!-- ─────────── ФОТО В ЗОЛОТОЙ РАМЕ ─────────── -->
+    <section class="portrait-wrap reveal" aria-label="Юбиляр">
+      <div class="portrait-frame">
+        <img class="portrait" src="img/main.jpg" alt="Сапура — юбиляр" loading="eager" />
+        <div class="portrait-gloss" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- ─────────── ГЕРОЙ: ЦИФРА 75 ─────────── -->
+    <section class="hero reveal">
+      <p class="hero-lead">Юбилей</p>
+      <div class="number" aria-label="75 лет">
+        <span class="digit">75</span>
+      </div>
+      <p class="hero-years">лет</p>
+      <h1 class="name">Сапура</h1>
+      <p class="wish">
+        75 — это большая, красивая цифра.<br />
+        Годы, наполненные любовью, теплом и мудростью.
+      </p>
+    </section>
+
+    <div class="ornament wide reveal" aria-hidden="true">
+      <span class="line"></span>
+      <span class="rose">&#10047;</span>
+      <span class="line"></span>
+    </div>
+
+    <!-- ─────────── ДЕТАЛИ СОБЫТИЯ ─────────── -->
+    <section class="details" aria-label="Детали события">
+
+      <article class="detail-card reveal">
+        <span class="detail-icon" aria-hidden="true">&#128197;</span>
+        <p class="detail-label">Дата</p>
+        <p class="detail-value">19 сентября 2026</p>
+        <p class="detail-extra">суббота</p>
+      </article>
+
+      <article class="detail-card reveal">
+        <span class="detail-icon" aria-hidden="true">&#128336;</span>
+        <p class="detail-label">Начало</p>
+        <p class="detail-value">12:00</p>
+        <p class="detail-extra">просим не опаздывать</p>
+      </article>
+
+      <article class="detail-card wide-card reveal">
+        <span class="detail-icon" aria-hidden="true">&#127869;</span>
+        <p class="detail-label">Место торжества</p>
+        <p class="detail-value">Ресторан «Тумар»</p>
+        <p class="detail-extra">ул. Сагадата Нурмагамбетова, 8 · 1 этаж</p>
+        <a class="map-btn" href="https://go.2gis.com/dRjV9" target="_blank" rel="noopener">
+          <span class="map-pin" aria-hidden="true">&#128205;</span>
+          Открыть в 2ГИС
+        </a>
+      </article>
+
+    </section>
+
+    <!-- ─────────── ОБРАТНЫЙ ОТСЧЁТ ─────────── -->
+    <section class="countdown reveal" aria-label="Обратный отсчёт">
+      <p class="countdown-title">До праздника осталось</p>
+      <div class="countdown-grid" id="countdown">
+        <div class="cd-unit"><span class="cd-num" data-d>—</span><span class="cd-cap">дней</span></div>
+        <div class="cd-unit"><span class="cd-num" data-h>—</span><span class="cd-cap">часов</span></div>
+        <div class="cd-unit"><span class="cd-num" data-m>—</span><span class="cd-cap">минут</span></div>
+        <div class="cd-unit"><span class="cd-num" data-s>—</span><span class="cd-cap">секунд</span></div>
+      </div>
+    </section>
+
+    <!-- ─────────── ФИНАЛ ─────────── -->
+    <footer class="outro reveal">
+      <div class="ornament" aria-hidden="true">
+        <span class="line"></span>
+        <span class="diamond">&#10022;</span>
+        <span class="line"></span>
+      </div>
+      <p class="outro-text">
+        Ваше присутствие станет
+        самым дорогим подарком.
+      </p>
+      <p class="outro-sign">С теплом и любовью,<br />Ваша семья</p>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
