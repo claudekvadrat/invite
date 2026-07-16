@@ -19,6 +19,7 @@
     var START_DELAY = 1100; // пауза перед стартом, чтобы человек увидел «шапку»
     var cancelled = false;
     var rafId = null;
+    var programmaticY = -1; // куда мы сами проскроллили в последнем кадре
 
     // Плавное ускорение-замедление (ease-in-out)
     function easeInOut(t) {
@@ -32,17 +33,51 @@
       removeListeners();
     }
 
-    // Любое намерение пользователя прокрутить самому — сразу отдаём управление
-    var events = ["wheel", "touchstart", "touchmove", "keydown", "mousedown", "pointerdown"];
+    // Отменяем ТОЛЬКО при реальном намерении прокрутить самому.
+    // touchstart НЕ слушаем — на телефоне простое касание не должно прерывать тур.
+    var touchStartY = null;
+    function onTouchStart(e) {
+      touchStartY = e.touches && e.touches[0] ? e.touches[0].clientY : null;
+    }
+    function onTouchMove(e) {
+      // отменяем, если палец сдвинулся заметно (реальный свайп прокрутки)
+      if (touchStartY === null) { stop(); return; }
+      var y = e.touches && e.touches[0] ? e.touches[0].clientY : touchStartY;
+      if (Math.abs(y - touchStartY) > 8) stop();
+    }
+    // Скролл, который сделали НЕ мы (колесо мыши, трекпад, свайп) — отменяет тур
+    function onScroll() {
+      if (cancelled) return;
+      var y = window.scrollY || document.documentElement.scrollTop || 0;
+      // если позиция отличается от нашей программной больше чем на 4px — это пользователь
+      if (programmaticY >= 0 && Math.abs(y - programmaticY) > 4) stop();
+    }
+
+    var wired = false;
     function addListeners() {
-      events.forEach(function (ev) {
-        window.addEventListener(ev, stop, { passive: true });
-      });
+      if (wired) return;
+      wired = true;
+      window.addEventListener("wheel", stop, { passive: true });
+      window.addEventListener("keydown", stop, { passive: true });
+      window.addEventListener("touchstart", onTouchStart, { passive: true });
+      window.addEventListener("touchmove", onTouchMove, { passive: true });
+      window.addEventListener("scroll", onScroll, { passive: true });
     }
     function removeListeners() {
-      events.forEach(function (ev) {
-        window.removeEventListener(ev, stop, { passive: true });
-      });
+      if (!wired) return;
+      wired = false;
+      window.removeEventListener("wheel", stop, { passive: true });
+      window.removeEventListener("keydown", stop, { passive: true });
+      window.removeEventListener("touchstart", onTouchStart, { passive: true });
+      window.removeEventListener("touchmove", onTouchMove, { passive: true });
+      window.removeEventListener("scroll", onScroll, { passive: true });
+    }
+
+    // Кросс-браузерная прокрутка окна (некоторые мобильные хотят оба варианта)
+    function scrollWindowTo(y) {
+      window.scrollTo(0, y);
+      // подстраховка для мобильных, где window.scrollTo внутри rAF иногда игнорится
+      if (document.scrollingElement) document.scrollingElement.scrollTop = y;
     }
 
     function run() {
@@ -62,7 +97,9 @@
         if (cancelled) return;
         if (startTime === null) startTime = now;
         var p = Math.min((now - startTime) / DURATION, 1);
-        window.scrollTo(0, startY + distance * easeInOut(p));
+        var y = Math.round(startY + distance * easeInOut(p));
+        programmaticY = y;      // запоминаем, куда скроллим сами
+        scrollWindowTo(y);
         if (p < 1) {
           rafId = requestAnimationFrame(frame);
         } else {
@@ -72,10 +109,15 @@
       rafId = requestAnimationFrame(frame);
     }
 
-    // Стартуем после загрузки картинок, чтобы высота страницы была финальной
-    window.addEventListener("load", function () {
+    // Стартуем после загрузки картинок, чтобы высота страницы была финальной.
+    // Если load уже случился — запускаемся сразу.
+    if (document.readyState === "complete") {
       setTimeout(run, START_DELAY);
-    });
+    } else {
+      window.addEventListener("load", function () {
+        setTimeout(run, START_DELAY);
+      });
+    }
   })();
 
   /* ── 1. Плавное появление блоков при скролле ── */
