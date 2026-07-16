@@ -8,15 +8,15 @@
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* ── 0. Кинематографичный автоскролл вниз при заходе (≈15 сек) ── */
-  (function autoScrollTour() {
+  /* ── 0. Кинематографичный автоскролл вниз (запускается ПОСЛЕ заставки) ── */
+  var startTour = (function autoScrollTour() {
     // Автоскролл работает всегда (даже при reduce-motion) — это ключевая фича приглашения
 
     // Не даём браузеру восстанавливать прежнюю позицию — тур всегда с верха
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
     var DURATION = 15000;  // общая длительность прокрутки, мс (медленно и плавно)
-    var START_DELAY = 1100; // пауза перед стартом, чтобы человек увидел «шапку»
+    var START_DELAY = 700;  // короткая пауза после клика перед стартом тура
     var cancelled = false;
     var rafId = null;
     var programmaticY = -1; // куда мы сами проскроллили в последнем кадре
@@ -107,13 +107,85 @@
       rafId = requestAnimationFrame(frame);
     }
 
-    // Стартуем после загрузки картинок, чтобы высота страницы была финальной.
-    // Если load уже случился — запускаемся сразу.
-    if (document.readyState === "complete") {
+    // Возвращаем функцию запуска — её вызовет заставка после клика.
+    var started = false;
+    return function () {
+      if (started) return;
+      started = true;
+      cancelled = false;
       setTimeout(run, START_DELAY);
-    } else {
-      window.addEventListener("load", function () {
-        setTimeout(run, START_DELAY);
+    };
+  })();
+
+  /* ── 0б. Заставка + фоновая музыка ── */
+  (function splashAndMusic() {
+    var splash = document.getElementById("splash");
+    var bgm = document.getElementById("bgm");
+    var toggle = document.getElementById("musicToggle");
+    var enterBtns = [
+      document.getElementById("enterBtn"),
+      document.getElementById("enterBtn2")
+    ];
+    if (!splash) { startTour(); return; }
+
+    // Блокируем прокрутку страницы, пока показана заставка
+    document.body.classList.add("locked");
+    // Гарантируем старт сверху
+    window.scrollTo(0, 0);
+
+    var entered = false;
+
+    function enter() {
+      if (entered) return;
+      entered = true;
+
+      // 1) музыка — запуск именно в обработчике клика (иначе браузер заблокирует)
+      if (bgm) {
+        bgm.volume = 0;
+        var pr = bgm.play();
+        if (pr && pr.catch) pr.catch(function () {});
+        // мягкое нарастание громкости
+        fadeIn(bgm, 0.7, 1200);
+        if (toggle) {
+          toggle.hidden = false;
+          toggle.classList.remove("muted");
+        }
+      }
+
+      // 2) прячем заставку
+      splash.classList.add("hidden");
+      document.body.classList.remove("locked");
+
+      // 3) запускаем тур-прокрутку после того, как заставка начала исчезать
+      setTimeout(function () {
+        window.scrollTo(0, 0);
+        startTour();
+      }, 350);
+    }
+
+    function fadeIn(audio, target, ms) {
+      var steps = 24, i = 0;
+      var iv = setInterval(function () {
+        i++;
+        audio.volume = Math.min(target, (target * i) / steps);
+        if (i >= steps) clearInterval(iv);
+      }, ms / steps);
+    }
+
+    enterBtns.forEach(function (b) {
+      if (b) b.addEventListener("click", enter);
+    });
+
+    // Кнопка вкл/выкл музыки
+    if (toggle && bgm) {
+      toggle.addEventListener("click", function () {
+        if (bgm.paused) {
+          bgm.play().catch(function () {});
+          toggle.classList.remove("muted");
+        } else {
+          bgm.pause();
+          toggle.classList.add("muted");
+        }
       });
     }
   })();

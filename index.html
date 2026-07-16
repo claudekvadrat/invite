@@ -35,6 +35,37 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- ─────────── КІРІС ЭКРАНЫ (заставка) ─────────── -->
+  <div id="splash" class="splash">
+    <div class="splash-inner">
+      <div class="ornament" aria-hidden="true">
+        <span class="line"></span>
+        <span class="diamond">&#10022;</span>
+        <span class="line"></span>
+      </div>
+      <p class="splash-eyebrow">Мерейтойға шақыру</p>
+
+      <button id="enterBtn" class="splash-photo-btn" type="button" aria-label="Ашу — кіру">
+        <span class="portrait-frame splash-frame">
+          <img class="portrait" src="img/main.jpg" alt="Сапура" />
+          <span class="portrait-gloss" aria-hidden="true"></span>
+        </span>
+      </button>
+
+      <p class="splash-name">Сапура</p>
+      <p class="splash-age">75 <span>жас</span></p>
+
+      <button id="enterBtn2" class="splash-cta" type="button">
+        <span class="splash-cta-icon" aria-hidden="true">&#9834;</span>
+        Басыңыз
+      </button>
+      <p class="splash-hint">музыкамен ашылады</p>
+    </div>
+  </div>
+
+  <!-- Фонды музыка -->
+  <audio id="bgm" src="img/music.mp3" loop preload="auto"></audio>
+
   <!-- Түсіп жатқан раушан жапырақтары (сәндік) -->
   <canvas id="petals" aria-hidden="true"></canvas>
 
@@ -179,6 +210,12 @@
     </footer>
 
   </main>
+
+  <!-- Музыканы қосу/өшіру -->
+  <button id="musicToggle" class="music-toggle" type="button" aria-label="Музыка" hidden>
+    <span class="music-on" aria-hidden="true">&#9835;</span>
+    <span class="music-off" aria-hidden="true">&#9834;</span>
+  </button>
 
   <script src="script.js"></script>
 </body>
