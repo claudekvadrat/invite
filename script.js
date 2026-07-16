@@ -8,6 +8,76 @@
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* ── 0. Кинематографичный автоскролл вниз при заходе (≈5 сек) ── */
+  (function autoScrollTour() {
+    if (reduceMotion) return;
+
+    // Не даём браузеру восстанавливать прежнюю позицию — тур всегда с верха
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+
+    var DURATION = 5000;   // общая длительность прокрутки, мс
+    var START_DELAY = 1100; // пауза перед стартом, чтобы человек увидел «шапку»
+    var cancelled = false;
+    var rafId = null;
+
+    // Плавное ускорение-замедление (ease-in-out)
+    function easeInOut(t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function stop() {
+      if (cancelled) return;
+      cancelled = true;
+      if (rafId) cancelAnimationFrame(rafId);
+      removeListeners();
+    }
+
+    // Любое намерение пользователя прокрутить самому — сразу отдаём управление
+    var events = ["wheel", "touchstart", "touchmove", "keydown", "mousedown", "pointerdown"];
+    function addListeners() {
+      events.forEach(function (ev) {
+        window.addEventListener(ev, stop, { passive: true });
+      });
+    }
+    function removeListeners() {
+      events.forEach(function (ev) {
+        window.removeEventListener(ev, stop, { passive: true });
+      });
+    }
+
+    function run() {
+      if (cancelled) return;
+      var startY = window.scrollY || 0;
+      var maxY = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      ) - window.innerHeight;
+      var distance = maxY - startY;
+      if (distance <= 8) return; // прокручивать нечего
+
+      var startTime = null;
+      addListeners();
+
+      function frame(now) {
+        if (cancelled) return;
+        if (startTime === null) startTime = now;
+        var p = Math.min((now - startTime) / DURATION, 1);
+        window.scrollTo(0, startY + distance * easeInOut(p));
+        if (p < 1) {
+          rafId = requestAnimationFrame(frame);
+        } else {
+          removeListeners();
+        }
+      }
+      rafId = requestAnimationFrame(frame);
+    }
+
+    // Стартуем после загрузки картинок, чтобы высота страницы была финальной
+    window.addEventListener("load", function () {
+      setTimeout(run, START_DELAY);
+    });
+  })();
+
   /* ── 1. Плавное появление блоков при скролле ── */
   (function revealOnScroll() {
     var items = document.querySelectorAll(".reveal");
@@ -44,12 +114,21 @@
 
     function pad(n) { return n < 10 ? "0" + n : "" + n; }
 
+    // Лёгкий «подскок» ячейки при изменении значения
+    function bump(el) {
+      if (reduceMotion) return;
+      el.classList.remove("bump");
+      // reflow, чтобы перезапустить анимацию
+      void el.offsetWidth;
+      el.classList.add("bump");
+    }
+
     function tick() {
       var diff = target - Date.now();
       if (diff <= 0) {
         dEl.textContent = hEl.textContent = mEl.textContent = sEl.textContent = "0";
         var title = document.querySelector(".countdown-title");
-        if (title) title.textContent = "Праздник наступил! 🎉";
+        if (title) title.textContent = "Мереке басталды! 🎉";
         clearInterval(timer);
         return;
       }
@@ -58,6 +137,7 @@
       hEl.textContent = pad(Math.floor((s % 86400) / 3600));
       mEl.textContent = pad(Math.floor((s % 3600) / 60));
       sEl.textContent = pad(s % 60);
+      bump(sEl); // подскок секундной ячейки каждую секунду
     }
     tick();
     var timer = setInterval(tick, 1000);
