@@ -15,7 +15,7 @@
     // Не даём браузеру восстанавливать прежнюю позицию — тур всегда с верха
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
-    var DURATION = 15000;  // общая длительность прокрутки, мс (медленно и плавно)
+    var DURATION = 19500;  // общая длительность прокрутки, мс (на 30% медленнее)
     var START_DELAY = 700;  // короткая пауза после клика перед стартом тура
     var cancelled = false;
     var rafId = null;

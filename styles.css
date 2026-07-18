@@ -422,6 +422,11 @@ body::before {
   margin-top: 2px;
 }
 
+/* Адрес — крупнее на 50%, чтобы легко читался */
+.detail-extra--address {
+  font-size: clamp(25.5px, 6.9vw, 30px);
+}
+
 /* Кнопка карты */
 .map-btn {
   margin-top: 18px;
